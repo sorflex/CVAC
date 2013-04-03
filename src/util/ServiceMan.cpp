@@ -79,6 +79,19 @@ public:
         localAndClientMsg(VLogger::INFO, NULL, "Service stopped: %s\n",
                      mManager->getServiceName().c_str());
     }
+
+    ::Ice::Object *addInterface(::Ice::Object *servant, 
+                               const ::Ice::Current *current)
+    {
+        Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("");
+        Ice::Identity ident = new Ice::Identity();
+        ident->name = IceUtil::generateUUID();
+        ident->category = "";
+        adapter->add(*servant, *ident);
+        adapter->activate();
+        current->con->setAdapter(adapter);
+        return ident;
+    }
     
     ::Ice::ObjectAdapterPtr  getAdapter() { return mAdapter; }
 
@@ -104,19 +117,6 @@ void cvac::ServiceManager::setService(cvac::CVAlgorithmService *serv,
     mIceService = new ServiceManagerIceService(this, serv);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//void cvac::ServiceManager::start(const ::std::string& name,const 
-//                  ::Ice::CommunicatorPtr& communicator,const 
-//                  ::Ice::StringSeq&)
-//{
-    
-//}
-
-///////////////////////////////////////////////////////////////////////////////
-//void cvac::ServiceManager::stop()
-//{
-  
-//}
 
 ///////////////////////////////////////////////////////////////////////////////
 std::string cvac::ServiceManager::getDataDir()
@@ -206,4 +206,10 @@ std::string cvac::ServiceManager::getIceName()
 void cvac::ServiceManager::setIceName(std::string name)
 {
     mIceName = name;
+}
+///////////////////////////////////////////////////////////////////////////////
+void *cvac::ServiceManager::addInterface(::Ice::Object *instance,
+                                                const ::Ice::Communicator *com)
+{
+    return mIceService->addInterface(instance, com);
 }

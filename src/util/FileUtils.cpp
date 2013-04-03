@@ -131,14 +131,15 @@ std::string cvac::getFilePath(const std::string& fileName)
 ////////////////////////////////////////////////////////////////////////////////
 std::string cvac::getCurrentWorkingDirectory()
 {
-   std::string currentDir(FILENAME_MAX, '\0');
+   std::string currentDir;
+   char temp[FILENAME_MAX];
 
-   if (!GetCurrentDir(&currentDir[0], FILENAME_MAX))
+   if (!GetCurrentDir(temp, FILENAME_MAX))
    {
       currentDir = "";
    }
 
-   return currentDir;
+   return currentDir(temp);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

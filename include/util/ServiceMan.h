@@ -1,4 +1,3 @@
-#ifndef __SERVICEMAN_H__
 /***************************************************************************
  * CVAC Software Disclaimer
  * 
@@ -36,13 +35,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * **************************************************************************/
+#ifndef __SERVICEMAN_H__
 #define __SERVICEMAN_H__
 
 #include <string>
-//#include <Ice/Ice.h>
-//#include <IceBox/IceBox.h>
-//#include <Services.h>
-
 
 
 /**
@@ -56,10 +52,11 @@ namespace cvac
 {
     class ServiceManagerIceService; 
     class CVAlgorithmService;
+    class ::Ice::Object;
+    class ::Ice::Communicator;
     /**
      * Class to manage the Ice Service functions
      */
-    //class ServiceManager : public ::IceBox::Service
     class ServiceManager
     {
     public:
@@ -78,15 +75,16 @@ namespace cvac
          */
         void setService(cvac::CVAlgorithmService *service, std::string serviceName);
 
-       
 
         /** 
          * Returns true if a stop has been requested for this service.
          * The user needs to call this when running lengthly operations and
-         * stop the operation if it returns true.  If the user supports these functions 
-         * then he needs to call the setRunning call before the lengthly operation so the
-         * ServiceManager will wait for the stop to be completed.  After the lengthly
-         * operation the user should call clearStop.
+         * stop the operation if it returns true.  
+         * If the user supports these functions 
+         * then he needs to call the setRunning call 
+         * before the lengthly operation so the
+         * ServiceManager will wait for the stop to be completed. 
+         * After the lengthly operation the user should call clearStop.
          */
         bool stopRequested();
     
@@ -145,11 +143,15 @@ namespace cvac
         /*
          * Return the ice service
          */
-        void*         getIceService() { return mIceService; }
+        void* getIceService() { return mIceService; }
+
+        /*
+         * Add a new ice interface that is tied to the instance parameter.
+         */
+        void* addInterface(::Ice::Object *instance,
+                           const ::Ice::Communicator *com);
 
     private:
-        //::Ice::ObjectAdapterPtr         mAdapter;
-        //cvac::CVAlgorithmService*       mService;
         std::string                     mServiceName;
         std::string                     mIceName;
         int                             mStopState;

@@ -1,0 +1,24 @@
+PROJECT (Sample)
+
+SET(SOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/SampleDetector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SampleTrainer.cpp
+)
+
+SET(HEADER_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/SampleDetector.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SampleTrainer.h
+)
+
+SET(INCLUDE_DIRS
+    .
+    ${CVAC_INCLUDE_DIR}
+)
+
+INCLUDE_DIRECTORIES(${INCLUDE_DIRS})
+
+ADD_LIBRARY(sample STATIC
+            ${SOURCE_FILES}
+            ${HEADER_FILES}
+            )
+
