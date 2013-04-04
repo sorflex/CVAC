@@ -55,10 +55,12 @@ public:
 	
 
     bool isSlidingWindow();
-    cvac::Size getNativeWindowSize();
-    void getSlidingParameters(cvac::Size &startSize, cvac::Size &stopSize;
+    void getNativeWindowSize(int &width, int &height);
+    void getSlidingParameters(int &startWidth, int &startHeight, 
+                              int &stopWidth, int &stopHeight,
                               float &scaleFactor, float &stepX, float &stepY);
-    void setSlidingParameters(cvac::Size startSize, cvac::Size stopSize;
+    void setSlidingParameters(int startWidth, int startHeight, 
+                              int stopWidth, int stopHeight,
                               float scaleFactor, float stepX, float stepY);
     bool canSetSensitivity();
     void getSensitivity(double &falseAlarmRate, double &recall);

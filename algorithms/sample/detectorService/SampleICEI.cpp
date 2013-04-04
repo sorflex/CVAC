@@ -162,7 +162,7 @@ DetectorPropertiesPrx SampleICEI::getDetectorProperties(
     {
         if (mDetector == NULL)
             return NULL;
-        mProperties = new DetectorPropertiesI(mDetector);
+        mProperties = new SampleDetectorPropertiesI(mDetector);
         mPropProxy = *((DetectorPropertiesPrx*)mServiceMan->createInterface(
                                           mProperties, current));
     }
@@ -223,21 +223,27 @@ void SampleICEI::process(const Ice::Identity &client, const ::RunSet& runset,
 
 ///////////////////////////////////////////////////////////////////////////////
 
-DetectorPropertiesI::DetectorPropertiesI(SampleDetector *detector)
+/*
+ * Detector Properties should be modified based upon what properties the
+ * detector supports.  For Sample purposes, this detector supports
+ * all the properties.
+ */
+SampleDetectorPropertiesI::SampleDetectorPropertiesI(SampleDetector *detector)
 {
     mDetector = detector;
 }
 
-DetectorPropertiesI::~DetectorPropertiesI()
+SampleDetectorPropertiesI::~SampleDetectorPropertiesI()
 {
 }
 
-bool DetectorPropertiesI::isSlidingWindow(const ::Ice::Current &c)
+bool SampleDetectorPropertiesI::isSlidingWindow(const ::Ice::Current &c)
 {
     return mDetector->isSlidingWindow();
 }
 
-cvac::Size DetectorPropertiesI::getNativeWindowSize(const ::Ice::Current &c)
+cvac::Size SampleDetectorPropertiesI::getNativeWindowSize(
+                                                       const ::Ice::Current &c)
 {
     return mDetector->getNativeWindowSize();
 }

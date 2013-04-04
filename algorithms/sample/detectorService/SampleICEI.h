@@ -197,8 +197,8 @@ private:
     /**
      * The detector properties
      */
-    DetectorPropertiesI     *mProperties;
-    DetectorPropertiesPrx   mPropProxy;
+    SampleDetectorPropertiesI     *mProperties;
+    DetectorPropertiesPrx          mPropProxy;
 
     /**
      * This is the callback function passed in the cvac util function
@@ -215,11 +215,11 @@ private:
 /**
  * Interface class for the client to get at a detectors properties
  */
-class DetectorPropertiesI : public cvac::DetectorProperties
+class SampleDetectorPropertiesI : public cvac::DetectorProperties
 {
 public:
-    DetectorPropertiesI(SampleDetector *detector);
-    ~DetectorPropertiesI();
+    SampleDetectorPropertiesI(SampleDetector *detector);
+    ~SampleDetectorPropertiesI();
     bool isSlidingWindow(const ::Ice::Current &c);
     cvac::Size getNativeWindowSize(const ::Ice::Current &c);
     void getSlidingParameters(cvac::Size &startSize, cvac::Size &stopSize;
